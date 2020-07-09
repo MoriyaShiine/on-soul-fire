@@ -4,10 +4,10 @@
   "package": "moriyashiine.onsoulfire.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-	"OnSoulFireTracker",
-	"OnSoulFireTracker$Server",
+	"OnSoulFireHandler",
+	"OnSoulFireHandler$Server",
 	"SetSoulFire",
-	"ClearSoulFire"
+	"SoulFireDamage"
   ],
   "client": [
 	"client.RenderEntitySoulFire",

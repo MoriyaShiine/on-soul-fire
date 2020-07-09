@@ -1,11 +1,10 @@
 package moriyashiine.onsoulfire.mixin;
 
-import moriyashiine.onsoulfire.misc.OSFDataTrackers;
+import moriyashiine.onsoulfire.misc.OnSoulFireAccessor;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoulFireBlock;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,8 +16,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class SetSoulFire {
 	@Inject(method = "onEntityCollision", at = @At("HEAD"))
 	private void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo callbackInfo) {
-		if (entity instanceof LivingEntity) {
-			OSFDataTrackers.setOnSoulFire(entity, state.getBlock() instanceof SoulFireBlock);
+		if (!world.isClient) {
+			OnSoulFireAccessor accessor = ((OnSoulFireAccessor) entity);
+			accessor.setOnSoulFire(state.getBlock() instanceof SoulFireBlock);
+			accessor.sync(entity);
 		}
 	}
 }

@@ -1,7 +1,7 @@
 package moriyashiine.onsoulfire.mixin.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import moriyashiine.onsoulfire.misc.OSFDataTrackers;
+import moriyashiine.onsoulfire.misc.OnSoulFireAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameOverlayRenderer;
 import net.minecraft.client.render.BufferBuilder;
@@ -37,7 +37,7 @@ public class RenderPlayerSoulFire {
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.enableTexture();
-		Sprite sprite = OSFDataTrackers.getOnSoulFire(Objects.requireNonNull(minecraftClient.player)) ? SOUL_FIRE_1.getSprite() : ModelLoader.FIRE_1.getSprite();
+		Sprite sprite = ((OnSoulFireAccessor) Objects.requireNonNull(minecraftClient.player)).getOnSoulFire() ? SOUL_FIRE_1.getSprite() : ModelLoader.FIRE_1.getSprite();
 		minecraftClient.getTextureManager().bindTexture(sprite.getAtlas().getId());
 		float f = sprite.getMinU();
 		float g = sprite.getMaxU();

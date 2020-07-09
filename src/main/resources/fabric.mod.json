@@ -3,7 +3,7 @@
   "id": "onsoulfire",
   "version": "${version}",
   "name": "On Soul Fire",
-  "description": "Renders soul fire instead of regular fire if an entity was ignited by soul fire",
+  "description": "Makes soul fire actually have unique properties",
   "authors": [
 	"MoriyaShiine"
   ],
@@ -17,6 +17,9 @@
   "entrypoints": {
 	"main": [
 	  "moriyashiine.onsoulfire.OnSoulFire"
+	],
+	"client": [
+	  "moriyashiine.onsoulfire.client.OnSoulFireClient"
 	]
   },
   "mixins": [

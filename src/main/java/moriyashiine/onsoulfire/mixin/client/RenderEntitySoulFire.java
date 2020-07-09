@@ -1,6 +1,6 @@
 package moriyashiine.onsoulfire.mixin.client;
 
-import moriyashiine.onsoulfire.misc.OSFDataTrackers;
+import moriyashiine.onsoulfire.misc.OnSoulFireAccessor;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.VertexConsumer;
@@ -13,7 +13,6 @@ import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -29,12 +28,12 @@ public class RenderEntitySoulFire {
 	private static final SpriteIdentifier SOUL_FIRE_1 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEX, new Identifier("block/soul_fire_1"));
 	
 	@Shadow
-	public Camera camera;
+	private Camera camera;
 	
 	@Inject(method = "renderFire", at = @At("HEAD"), cancellable = true)
 	private void renderFire(MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity, CallbackInfo callbackInfo) {
 		Sprite sprite, sprite2;
-		if (entity instanceof LivingEntity && OSFDataTrackers.getOnSoulFire(entity)) {
+		if (((OnSoulFireAccessor) entity).getOnSoulFire()) {
 			sprite = SOUL_FIRE_0.getSprite();
 			sprite2 = SOUL_FIRE_1.getSprite();
 		}
