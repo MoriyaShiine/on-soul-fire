@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "onsoulfire",
+  "version": "${version}",
+  "name": "On Soul Fire",
+  "description": "Renders soul fire instead of regular fire if an entity was ignited by soul fire",
+  "authors": [
+	"MoriyaShiine"
+  ],
+  "contact": {
+	"homepage": "todo",
+	"sources": "https://github.com/MoriyaShiine/on-soul-fire"
+  },
+  "license": "GPL-3.0",
+  "icon": "assets/onsoulfire/icon.png",
+  "environment": "*",
+  "entrypoints": {
+	"main": [
+	  "moriyashiine.onsoulfire.OnSoulFire"
+	]
+  },
+  "mixins": [
+	"onsoulfire.mixins.json"
+  ],
+  "depends": {
+	"fabricloader": ">=0.7.4",
+	"fabric": "*",
+	"minecraft": "1.16.x"
+  },
+  "suggests": {
+	"flamingo": "*"
+  }
+}

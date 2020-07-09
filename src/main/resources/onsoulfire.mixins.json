@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "moriyashiine.onsoulfire.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+	"OnSoulFireTracker",
+	"OnSoulFireTracker$Server",
+	"SetSoulFire",
+	"ClearSoulFire"
+  ],
+  "client": [
+	"client.RenderEntitySoulFire",
+	"client.RenderPlayerSoulFire"
+  ],
+  "injectors": {
+	"defaultRequire": 1
+  }
+}
