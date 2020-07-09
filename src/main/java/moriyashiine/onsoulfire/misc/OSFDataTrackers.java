@@ -10,8 +10,7 @@ public class OSFDataTrackers {
 	public static final TrackedData<Boolean> ON_SOUL_FIRE = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	public static void setOnSoulFire(Entity entity, boolean onSoulFire) {
-		if (entity instanceof LivingEntity)
-		{
+		if (entity instanceof LivingEntity) {
 			entity.getDataTracker().set(ON_SOUL_FIRE, onSoulFire);
 		}
 	}

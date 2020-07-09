@@ -4,7 +4,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import moriyashiine.onsoulfire.misc.OSFDataTrackers;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameOverlayRenderer;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.BufferRenderer;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
@@ -22,13 +25,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Objects;
 
 @Mixin(InGameOverlayRenderer.class)
-public class RenderPlayerSoulFire
-{
+public class RenderPlayerSoulFire {
+	@SuppressWarnings("deprecation")
 	private static final SpriteIdentifier SOUL_FIRE_1 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEX, new Identifier("block/soul_fire_1"));
 	
 	@Inject(method = "renderFireOverlay", at = @At("HEAD"), cancellable = true)
-	private static void renderFireOverlay(MinecraftClient minecraftClient, MatrixStack matrixStack, CallbackInfo callbackInfo)
-	{
+	private static void renderFireOverlay(MinecraftClient minecraftClient, MatrixStack matrixStack, CallbackInfo callbackInfo) {
 		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 		RenderSystem.depthFunc(519);
 		RenderSystem.depthMask(false);
@@ -48,10 +50,10 @@ public class RenderPlayerSoulFire
 		float n = MathHelper.lerp(l, g, h);
 		float o = MathHelper.lerp(l, i, k);
 		float p = MathHelper.lerp(l, j, k);
-		for(int r = 0; r < 2; ++r) {
+		for (int r = 0; r < 2; ++r) {
 			matrixStack.push();
-			matrixStack.translate((float)(-(r * 2 - 1)) * 0.24f, -0.3, 0);
-			matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((float)(r * 2 - 1) * 10));
+			matrixStack.translate((float) (-(r * 2 - 1)) * 0.24f, -0.3, 0);
+			matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((float) (r * 2 - 1) * 10));
 			Matrix4f matrix4f = matrixStack.peek().getModel();
 			bufferBuilder.begin(7, VertexFormats.POSITION_COLOR_TEXTURE);
 			bufferBuilder.vertex(matrix4f, -0.5f, -0.5f, -0.5f).color(1, 1, 1, 0.9f).texture(n, p).next();
