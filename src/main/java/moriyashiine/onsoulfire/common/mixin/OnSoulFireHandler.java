@@ -1,7 +1,7 @@
 package moriyashiine.onsoulfire.common.mixin;
 
 import com.mojang.authlib.GameProfile;
-import moriyashiine.onsoulfire.common.misc.OnSoulFireAccessor;
+import moriyashiine.onsoulfire.api.accessor.OnSoulFireAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -20,8 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(Entity.class)
-public abstract class OnSoulFireHandler implements OnSoulFireAccessor
-{
+public abstract class OnSoulFireHandler implements OnSoulFireAccessor {
 	private static final TrackedData<Boolean> ON_SOUL_FIRE = DataTracker.registerData(Entity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	@Shadow
@@ -35,7 +34,7 @@ public abstract class OnSoulFireHandler implements OnSoulFireAccessor
 		Object obj = this;
 		return ((Entity) obj).getDataTracker().get(ON_SOUL_FIRE);
 	}
-
+	
 	@Override
 	public void setOnSoulFire(boolean onSoulFire) {
 		Object obj = this;
@@ -43,20 +42,17 @@ public abstract class OnSoulFireHandler implements OnSoulFireAccessor
 	}
 	
 	@Inject(method = "fromTag", at = @At("HEAD"))
-	private void fromTag(CompoundTag tag, CallbackInfo callbackInfo)
-	{
+	private void fromTag(CompoundTag tag, CallbackInfo callbackInfo) {
 		setOnSoulFire(tag.getBoolean("OnSoulFire"));
 	}
 	
 	@Inject(method = "toTag", at = @At("HEAD"))
-	private void toTag(CompoundTag tag, CallbackInfoReturnable<CompoundTag> callbackInfo)
-	{
+	private void toTag(CompoundTag tag, CallbackInfoReturnable<CompoundTag> callbackInfo) {
 		tag.putBoolean("OnSoulFire", getOnSoulFire());
 	}
 	
 	@Inject(method = "<init>", at = @At("TAIL"))
-	private void initDataTracker(CallbackInfo callbackInfo)
-	{
+	private void initDataTracker(CallbackInfo callbackInfo) {
 		Object obj = this;
 		((Entity) obj).getDataTracker().startTracking(ON_SOUL_FIRE, false);
 	}

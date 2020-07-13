@@ -1,7 +1,7 @@
 package moriyashiine.onsoulfire.client.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import moriyashiine.onsoulfire.common.misc.OnSoulFireAccessor;
+import moriyashiine.onsoulfire.api.accessor.OnSoulFireAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameOverlayRenderer;
 import net.minecraft.client.render.BufferBuilder;

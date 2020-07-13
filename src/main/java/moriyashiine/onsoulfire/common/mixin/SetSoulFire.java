@@ -1,6 +1,6 @@
 package moriyashiine.onsoulfire.common.mixin;
 
-import moriyashiine.onsoulfire.common.misc.OnSoulFireAccessor;
+import moriyashiine.onsoulfire.api.accessor.OnSoulFireAccessor;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoulFireBlock;
