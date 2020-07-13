@@ -16,9 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class SetSoulFire {
 	@Inject(method = "onEntityCollision", at = @At("HEAD"))
 	private void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo callbackInfo) {
-		if (!world.isClient) {
-			OnSoulFireAccessor accessor = ((OnSoulFireAccessor) entity);
-			accessor.setOnSoulFire(state.getBlock() instanceof SoulFireBlock);
-		}
+		OnSoulFireAccessor accessor = ((OnSoulFireAccessor) entity);
+		accessor.setOnSoulFire(state.getBlock() instanceof SoulFireBlock);
 	}
 }
