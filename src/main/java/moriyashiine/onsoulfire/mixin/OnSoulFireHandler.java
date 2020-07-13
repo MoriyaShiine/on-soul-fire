@@ -48,15 +48,18 @@ public abstract class OnSoulFireHandler implements OnSoulFireAccessor
 	private void toTag(CompoundTag tag, CallbackInfoReturnable<CompoundTag> callbackInfo)
 	{
 		tag.putBoolean("OnSoulFire", getOnSoulFire());
-		Object obj = this;
-		Entity thisObj = (Entity) obj;
-		//noinspection Convert2Lambda
-		world.getServer().send(new ServerTask(1, new Runnable() {
-			@Override
-			public void run() {
-				sync(thisObj);
-			}
-		}));
+		if (!world.isClient)
+		{
+			Object obj = this;
+			Entity thisObj = (Entity) obj;
+			//noinspection Convert2Lambda
+			world.getServer().send(new ServerTask(1, new Runnable() {
+				@Override
+				public void run() {
+					sync(thisObj);
+				}
+			}));
+		}
 	}
 	
 	@Inject(method = "tick", at = @At("TAIL"))
