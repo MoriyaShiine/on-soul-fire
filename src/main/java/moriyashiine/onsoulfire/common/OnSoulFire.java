@@ -1,4 +1,4 @@
-package moriyashiine.onsoulfire;
+package moriyashiine.onsoulfire.common;
 
 import net.fabricmc.api.ModInitializer;
 

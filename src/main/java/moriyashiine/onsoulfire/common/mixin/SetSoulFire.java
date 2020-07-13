@@ -1,6 +1,6 @@
-package moriyashiine.onsoulfire.mixin;
+package moriyashiine.onsoulfire.common.mixin;
 
-import moriyashiine.onsoulfire.misc.OnSoulFireAccessor;
+import moriyashiine.onsoulfire.common.misc.OnSoulFireAccessor;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoulFireBlock;
@@ -19,7 +19,6 @@ public class SetSoulFire {
 		if (!world.isClient) {
 			OnSoulFireAccessor accessor = ((OnSoulFireAccessor) entity);
 			accessor.setOnSoulFire(state.getBlock() instanceof SoulFireBlock);
-			accessor.sync(entity);
 		}
 	}
 }

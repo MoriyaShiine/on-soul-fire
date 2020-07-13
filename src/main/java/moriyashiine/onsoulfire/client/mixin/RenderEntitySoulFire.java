@@ -1,6 +1,6 @@
-package moriyashiine.onsoulfire.mixin.client;
+package moriyashiine.onsoulfire.client.mixin;
 
-import moriyashiine.onsoulfire.misc.OnSoulFireAccessor;
+import moriyashiine.onsoulfire.common.misc.OnSoulFireAccessor;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.VertexConsumer;

@@ -1,6 +1,6 @@
-package moriyashiine.onsoulfire.mixin;
+package moriyashiine.onsoulfire.common.mixin;
 
-import moriyashiine.onsoulfire.misc.OnSoulFireAccessor;
+import moriyashiine.onsoulfire.common.misc.OnSoulFireAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

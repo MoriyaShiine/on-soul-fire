@@ -16,14 +16,12 @@
   "environment": "*",
   "entrypoints": {
 	"main": [
-	  "moriyashiine.onsoulfire.OnSoulFire"
-	],
-	"client": [
-	  "moriyashiine.onsoulfire.client.OnSoulFireClient"
+	  "moriyashiine.onsoulfire.common.OnSoulFire"
 	]
   },
   "mixins": [
-	"onsoulfire.mixins.json"
+	"onsoulfire.mixins.json",
+	"onsoulfire.client_mixins.json"
   ],
   "depends": {
 	"fabricloader": ">=0.7.4",

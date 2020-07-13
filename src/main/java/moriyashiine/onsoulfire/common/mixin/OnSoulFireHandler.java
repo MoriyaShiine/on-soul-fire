@@ -1,11 +1,13 @@
-package moriyashiine.onsoulfire.mixin;
+package moriyashiine.onsoulfire.common.mixin;
 
 import com.mojang.authlib.GameProfile;
-import moriyashiine.onsoulfire.misc.OnSoulFireAccessor;
+import moriyashiine.onsoulfire.common.misc.OnSoulFireAccessor;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.ServerTask;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Entity.class)
 public abstract class OnSoulFireHandler implements OnSoulFireAccessor
 {
-	private boolean onSoulFire = false;
+	private static final TrackedData<Boolean> ON_SOUL_FIRE = DataTracker.registerData(Entity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	@Shadow
 	private World world;
@@ -30,12 +32,14 @@ public abstract class OnSoulFireHandler implements OnSoulFireAccessor
 	
 	@Override
 	public boolean getOnSoulFire() {
-		return onSoulFire;
+		Object obj = this;
+		return ((Entity) obj).getDataTracker().get(ON_SOUL_FIRE);
 	}
 
 	@Override
 	public void setOnSoulFire(boolean onSoulFire) {
-		this.onSoulFire = onSoulFire;
+		Object obj = this;
+		((Entity) obj).getDataTracker().set(ON_SOUL_FIRE, onSoulFire);
 	}
 	
 	@Inject(method = "fromTag", at = @At("HEAD"))
@@ -48,27 +52,19 @@ public abstract class OnSoulFireHandler implements OnSoulFireAccessor
 	private void toTag(CompoundTag tag, CallbackInfoReturnable<CompoundTag> callbackInfo)
 	{
 		tag.putBoolean("OnSoulFire", getOnSoulFire());
-		if (!world.isClient)
-		{
-			Object obj = this;
-			Entity thisObj = (Entity) obj;
-			//noinspection Convert2Lambda
-			world.getServer().send(new ServerTask(1, new Runnable() {
-				@Override
-				public void run() {
-					sync(thisObj);
-				}
-			}));
-		}
+	}
+	
+	@Inject(method = "<init>", at = @At("TAIL"))
+	private void initDataTracker(CallbackInfo callbackInfo)
+	{
+		Object obj = this;
+		((Entity) obj).getDataTracker().startTracking(ON_SOUL_FIRE, false);
 	}
 	
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (!world.isClient && getFireTicks() <= 0 && getOnSoulFire()) {
 			setOnSoulFire(false);
-			Object obj = this;
-			Entity thisObj = (Entity) obj;
-			sync(thisObj);
 		}
 	}
 	
