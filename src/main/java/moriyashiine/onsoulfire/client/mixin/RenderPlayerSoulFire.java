@@ -18,9 +18,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.Overwrite;
 
 import java.util.Objects;
 
@@ -29,8 +27,8 @@ public class RenderPlayerSoulFire {
 	@SuppressWarnings("deprecation")
 	private static final SpriteIdentifier SOUL_FIRE_1 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEX, new Identifier("block/soul_fire_1"));
 	
-	@Inject(method = "renderFireOverlay", at = @At("HEAD"), cancellable = true)
-	private static void renderFireOverlay(MinecraftClient minecraftClient, MatrixStack matrixStack, CallbackInfo callbackInfo) {
+	@Overwrite
+	private static void renderFireOverlay(MinecraftClient minecraftClient, MatrixStack matrixStack) {
 		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 		RenderSystem.depthFunc(519);
 		RenderSystem.depthMask(false);
@@ -39,27 +37,27 @@ public class RenderPlayerSoulFire {
 		RenderSystem.enableTexture();
 		Sprite sprite = ((OnSoulFireAccessor) Objects.requireNonNull(minecraftClient.player)).getOnSoulFire() ? SOUL_FIRE_1.getSprite() : ModelLoader.FIRE_1.getSprite();
 		minecraftClient.getTextureManager().bindTexture(sprite.getAtlas().getId());
-		float f = sprite.getMinU();
-		float g = sprite.getMaxU();
-		float h = (f + g) / 2;
-		float i = sprite.getMinV();
-		float j = sprite.getMaxV();
-		float k = (i + j) / 2;
-		float l = sprite.getAnimationFrameDelta();
-		float m = MathHelper.lerp(l, f, h);
-		float n = MathHelper.lerp(l, g, h);
-		float o = MathHelper.lerp(l, i, k);
-		float p = MathHelper.lerp(l, j, k);
-		for (int r = 0; r < 2; ++r) {
+		float delta = sprite.getAnimationFrameDelta();
+		float minU = sprite.getMinU();
+		float maxU = sprite.getMaxU();
+		float minV = sprite.getMinV();
+		float maxV = sprite.getMaxV();
+		float medianV = (minV + maxV) / 2;
+		float medianU = (minU + maxU) / 2;
+		float x = MathHelper.lerp(delta, maxU, medianU);
+		float y = MathHelper.lerp(delta, minU, medianU);
+		float z = MathHelper.lerp(delta, minV, medianV);
+		float w = MathHelper.lerp(delta, maxV, medianV);
+		for (int i = 0; i < 2; ++i) {
 			matrixStack.push();
-			matrixStack.translate((float) (-(r * 2 - 1)) * 0.24f, -0.3, 0);
-			matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((float) (r * 2 - 1) * 10));
-			Matrix4f matrix4f = matrixStack.peek().getModel();
+			matrixStack.translate((float) (-(i * 2 - 1)) * 0.24f, -0.3, 0);
+			matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((float) (i * 2 - 1) * 10));
+			Matrix4f matrix = matrixStack.peek().getModel();
 			bufferBuilder.begin(7, VertexFormats.POSITION_COLOR_TEXTURE);
-			bufferBuilder.vertex(matrix4f, -0.5f, -0.5f, -0.5f).color(1, 1, 1, 0.9f).texture(n, p).next();
-			bufferBuilder.vertex(matrix4f, 0.5f, -0.5f, -0.5f).color(1, 1, 1, 0.9f).texture(m, p).next();
-			bufferBuilder.vertex(matrix4f, 0.5f, 0.5f, -0.5f).color(1, 1, 1, 0.9f).texture(m, o).next();
-			bufferBuilder.vertex(matrix4f, -0.5f, 0.5f, -0.5f).color(1, 1, 1, 0.9f).texture(n, o).next();
+			bufferBuilder.vertex(matrix, -0.5f, -0.5f, -0.5f).color(1, 1, 1, 0.9f).texture(x, w).next();
+			bufferBuilder.vertex(matrix, 0.5f, -0.5f, -0.5f).color(1, 1, 1, 0.9f).texture(y, w).next();
+			bufferBuilder.vertex(matrix, 0.5f, 0.5f, -0.5f).color(1, 1, 1, 0.9f).texture(y, z).next();
+			bufferBuilder.vertex(matrix, -0.5f, 0.5f, -0.5f).color(1, 1, 1, 0.9f).texture(x, z).next();
 			bufferBuilder.end();
 			BufferRenderer.draw(bufferBuilder);
 			matrixStack.pop();
@@ -67,6 +65,5 @@ public class RenderPlayerSoulFire {
 		RenderSystem.disableBlend();
 		RenderSystem.depthMask(true);
 		RenderSystem.depthFunc(515);
-		callbackInfo.cancel();
 	}
 }

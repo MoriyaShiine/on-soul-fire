@@ -15,10 +15,8 @@ import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityRenderDispatcher.class)
 public class RenderEntitySoulFire {
@@ -30,8 +28,9 @@ public class RenderEntitySoulFire {
 	@Shadow
 	private Camera camera;
 	
-	@Inject(method = "renderFire", at = @At("HEAD"), cancellable = true)
-	private void renderFire(MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity, CallbackInfo callbackInfo) {
+	
+	@Overwrite
+	private void renderFire(MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
 		Sprite sprite, sprite2;
 		if (((OnSoulFireAccessor) entity).getOnSoulFire()) {
 			sprite = SOUL_FIRE_0.getSprite();
@@ -42,38 +41,38 @@ public class RenderEntitySoulFire {
 			sprite2 = ModelLoader.FIRE_1.getSprite();
 		}
 		matrices.push();
-		float f = entity.getWidth() * 1.4f;
-		matrices.scale(f, f, f);
-		float g = 0.5f;
-		float i = entity.getHeight() / f;
-		float j = 0;
+		float width = entity.getWidth() * 1.4f;
+		float height = entity.getHeight() / width;
+		float x = 0.5f;
+		float y = 0;
+		float z = 0;
+		int i = 0;
+		//noinspection SuspiciousNameCombination
+		matrices.scale(width, width, width);
 		matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-camera.getYaw()));
-		matrices.translate(0, 0, -0.3f + (float) ((int) i) * 0.02f);
-		float k = 0;
-		int l = 0;
+		matrices.translate(0, 0, -0.3f + (float) ((int) height) * 0.02f);
 		VertexConsumer vertexConsumer = vertexConsumers.getBuffer(TexturedRenderLayers.getEntityCutout());
-		for (MatrixStack.Entry entry = matrices.peek(); i > 0; ++l) {
-			Sprite sprite3 = l % 2 == 0 ? sprite : sprite2;
-			float m = sprite3.getMinU();
-			float n = sprite3.getMinV();
-			float o = sprite3.getMaxU();
-			float p = sprite3.getMaxV();
-			if (l / 2 % 2 == 0) {
-				float q = o;
-				o = m;
-				m = q;
+		for (MatrixStack.Entry entry = matrices.peek(); height > 0; ++i) {
+			Sprite spriteToUse = i % 2 == 0 ? sprite : sprite2;
+			float minU = spriteToUse.getMinU();
+			float maxU = spriteToUse.getMaxU();
+			float minV = spriteToUse.getMinV();
+			float maxV = spriteToUse.getMaxV();
+			if (i / 2 % 2 == 0) {
+				float temp = maxU;
+				maxU = minU;
+				minU = temp;
 			}
-			drawFireVertex(entry, vertexConsumer, g, 0 - j, k, o, p);
-			drawFireVertex(entry, vertexConsumer, -g, 0 - j, k, m, p);
-			drawFireVertex(entry, vertexConsumer, -g, 1.4f - j, k, m, n);
-			drawFireVertex(entry, vertexConsumer, g, 1.4f - j, k, o, n);
-			i -= 0.45f;
-			j -= 0.45f;
-			g *= 0.9f;
-			k += 0.03f;
+			drawFireVertex(entry, vertexConsumer, x, 0 - y, z, maxU, maxV);
+			drawFireVertex(entry, vertexConsumer, -x, 0 - y, z, minU, maxV);
+			drawFireVertex(entry, vertexConsumer, -x, 1.4f - y, z, minU, minV);
+			drawFireVertex(entry, vertexConsumer, x, 1.4f - y, z, maxU, minV);
+			height -= 0.45f;
+			x *= 0.9f;
+			y -= 0.45f;
+			z += 0.03f;
 		}
 		matrices.pop();
-		callbackInfo.cancel();
 	}
 	
 	private static void drawFireVertex(MatrixStack.Entry entry, VertexConsumer vertices, float x, float y, float z, float u, float v) {
