@@ -52,7 +52,7 @@ public class RenderEntitySoulFire {
 		float k = 0;
 		int l = 0;
 		VertexConsumer vertexConsumer = vertexConsumers.getBuffer(TexturedRenderLayers.getEntityCutout());
-		for (MatrixStack.Entry entry = matrices.peek(); i > 0.0F; ++l) {
+		for (MatrixStack.Entry entry = matrices.peek(); i > 0; ++l) {
 			Sprite sprite3 = l % 2 == 0 ? sprite : sprite2;
 			float m = sprite3.getMinU();
 			float n = sprite3.getMinV();
