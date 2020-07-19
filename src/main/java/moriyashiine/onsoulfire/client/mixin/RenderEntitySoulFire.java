@@ -28,6 +28,9 @@ public class RenderEntitySoulFire {
 	@Shadow
 	private Camera camera;
 	
+	@Shadow
+	private static void drawFireVertex(MatrixStack.Entry entry, VertexConsumer vertices, float x, float y, float z, float u, float v) {
+	}
 	
 	@Overwrite
 	private void renderFire(MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
@@ -63,8 +66,8 @@ public class RenderEntitySoulFire {
 				maxU = minU;
 				minU = temp;
 			}
-			drawFireVertex(entry, vertexConsumer, x, 0 - y, z, maxU, maxV);
-			drawFireVertex(entry, vertexConsumer, -x, 0 - y, z, minU, maxV);
+			drawFireVertex(entry, vertexConsumer, x, -y, z, maxU, maxV);
+			drawFireVertex(entry, vertexConsumer, -x, -y, z, minU, maxV);
 			drawFireVertex(entry, vertexConsumer, -x, 1.4f - y, z, minU, minV);
 			drawFireVertex(entry, vertexConsumer, x, 1.4f - y, z, maxU, minV);
 			height -= 0.45f;
@@ -73,9 +76,5 @@ public class RenderEntitySoulFire {
 			z += 0.03f;
 		}
 		matrices.pop();
-	}
-	
-	private static void drawFireVertex(MatrixStack.Entry entry, VertexConsumer vertices, float x, float y, float z, float u, float v) {
-		vertices.vertex(entry.getModel(), x, y, z).color(255, 255, 255, 255).texture(u, v).overlay(0, 10).light(240).normal(entry.getNormal(), 0, 1, 0).next();
 	}
 }
