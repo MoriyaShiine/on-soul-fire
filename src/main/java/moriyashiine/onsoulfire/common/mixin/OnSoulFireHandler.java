@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,27 +19,28 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@SuppressWarnings("ConstantConditions")
 @Mixin(Entity.class)
 public abstract class OnSoulFireHandler implements OnSoulFireAccessor {
 	private static final TrackedData<Boolean> ON_SOUL_FIRE = DataTracker.registerData(Entity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	@Shadow
-	private World world;
+	public World world;
+	
+	@Final
+	@Shadow
+	protected DataTracker dataTracker;
 	
 	@Shadow
-	abstract int getFireTicks();
+	public abstract int getFireTicks();
 	
 	@Override
 	public boolean getOnSoulFire() {
-		Object obj = this;
-		return ((Entity) obj).getDataTracker().get(ON_SOUL_FIRE);
+		return dataTracker.get(ON_SOUL_FIRE);
 	}
 	
 	@Override
 	public void setOnSoulFire(boolean onSoulFire) {
-		Object obj = this;
-		((Entity) obj).getDataTracker().set(ON_SOUL_FIRE, onSoulFire);
+		dataTracker.set(ON_SOUL_FIRE, onSoulFire);
 	}
 	
 	@Inject(method = "fromTag", at = @At("HEAD"))
@@ -53,8 +55,7 @@ public abstract class OnSoulFireHandler implements OnSoulFireAccessor {
 	
 	@Inject(method = "<init>", at = @At("TAIL"))
 	private void initDataTracker(CallbackInfo callbackInfo) {
-		Object obj = this;
-		((Entity) obj).getDataTracker().startTracking(ON_SOUL_FIRE, false);
+		dataTracker.startTracking(ON_SOUL_FIRE, false);
 	}
 	
 	@Inject(method = "tick", at = @At("TAIL"))

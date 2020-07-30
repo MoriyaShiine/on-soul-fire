@@ -14,11 +14,6 @@
   "license": "GPL-3.0",
   "icon": "assets/onsoulfire/icon.png",
   "environment": "*",
-  "entrypoints": {
-	"main": [
-	  "moriyashiine.onsoulfire.common.OnSoulFire"
-	]
-  },
   "mixins": [
 	"onsoulfire.mixins.json",
 	"onsoulfire.client_mixins.json"
