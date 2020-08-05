@@ -1,4 +1,4 @@
-package moriyashiine.onsoulfire.client.mixin;
+package moriyashiine.onsoulfire.mixin.client;
 
 import moriyashiine.onsoulfire.api.accessor.OnSoulFireAccessor;
 import net.fabricmc.api.EnvType;
@@ -15,6 +15,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 @Environment(EnvType.CLIENT)
 @Mixin(EntityRenderDispatcher.class)
 public class RenderEntitySoulFire {
@@ -23,17 +25,23 @@ public class RenderEntitySoulFire {
 	
 	@Redirect(method = "renderFire", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/SpriteIdentifier;getSprite()Lnet/minecraft/client/texture/Sprite;", ordinal = 0))
 	private Sprite getSprite0(SpriteIdentifier obj, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
-		if (((OnSoulFireAccessor) entity).getOnSoulFire()) {
-			return SOUL_FIRE_0.getSprite();
-		}
-		return obj.getSprite();
+		AtomicReference<Sprite> sprite = new AtomicReference<>(obj.getSprite());
+		OnSoulFireAccessor.get(entity).ifPresent(onSoulFireAccessor -> {
+			if (onSoulFireAccessor.getOnSoulFire()) {
+				sprite.set(SOUL_FIRE_0.getSprite());
+			}
+		});
+		return sprite.get();
 	}
 	
 	@Redirect(method = "renderFire", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/SpriteIdentifier;getSprite()Lnet/minecraft/client/texture/Sprite;", ordinal = 1))
 	private Sprite getSprite1(SpriteIdentifier obj, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
-		if (((OnSoulFireAccessor) entity).getOnSoulFire()) {
-			return SOUL_FIRE_1.getSprite();
-		}
-		return obj.getSprite();
+		AtomicReference<Sprite> sprite = new AtomicReference<>(obj.getSprite());
+		OnSoulFireAccessor.get(entity).ifPresent(onSoulFireAccessor -> {
+			if (onSoulFireAccessor.getOnSoulFire()) {
+				sprite.set(SOUL_FIRE_1.getSprite());
+			}
+		});
+		return sprite.get();
 	}
 }

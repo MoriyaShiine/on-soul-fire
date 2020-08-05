@@ -1,4 +1,4 @@
-package moriyashiine.onsoulfire.common.mixin;
+package moriyashiine.onsoulfire.mixin;
 
 import com.mojang.authlib.GameProfile;
 import moriyashiine.onsoulfire.api.accessor.OnSoulFireAccessor;
@@ -66,14 +66,14 @@ public abstract class OnSoulFireHandler implements OnSoulFireAccessor {
 	}
 	
 	@Mixin(ServerPlayerEntity.class)
-	private abstract static class Server extends PlayerEntity implements OnSoulFireAccessor {
+	private abstract static class Server extends PlayerEntity {
 		public Server(World world, BlockPos blockPos, GameProfile gameProfile) {
 			super(world, blockPos, gameProfile);
 		}
 		
 		@Inject(method = "copyFrom", at = @At("TAIL"))
 		private void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
-			setOnSoulFire(((OnSoulFireAccessor) oldPlayer).getOnSoulFire());
+			OnSoulFireAccessor.get(this).ifPresent(onSoulFireAccessor -> OnSoulFireAccessor.get(oldPlayer).ifPresent(oldOnSoulFireAccessor -> onSoulFireAccessor.setOnSoulFire(oldOnSoulFireAccessor.getOnSoulFire())));
 		}
 	}
 }

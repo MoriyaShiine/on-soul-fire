@@ -1,4 +1,4 @@
-package moriyashiine.onsoulfire.common.mixin;
+package moriyashiine.onsoulfire.mixin;
 
 import moriyashiine.onsoulfire.api.accessor.OnSoulFireAccessor;
 import net.minecraft.block.AbstractFireBlock;
@@ -16,6 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class SetSoulFire {
 	@Inject(method = "onEntityCollision", at = @At("HEAD"))
 	private void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo callbackInfo) {
-		((OnSoulFireAccessor) entity).setOnSoulFire(state.getBlock() instanceof SoulFireBlock);
+		OnSoulFireAccessor.get(entity).ifPresent(onSoulFireAccessor -> onSoulFireAccessor.setOnSoulFire(state.getBlock() instanceof SoulFireBlock));
 	}
 }
