@@ -67,8 +67,8 @@ public abstract class OnSoulFireHandler implements OnSoulFireAccessor {
 	
 	@Mixin(ServerPlayerEntity.class)
 	private abstract static class Server extends PlayerEntity {
-		public Server(World world, BlockPos blockPos, GameProfile gameProfile) {
-			super(world, blockPos, gameProfile);
+		public Server(World world, BlockPos pos, float yaw, GameProfile profile) {
+			super(world, pos, yaw, profile);
 		}
 		
 		@Inject(method = "copyFrom", at = @At("TAIL"))
