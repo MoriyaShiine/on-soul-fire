@@ -73,7 +73,7 @@ public abstract class OnSoulFireHandler implements OnSoulFireAccessor {
 		
 		@Inject(method = "copyFrom", at = @At("TAIL"))
 		private void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
-			OnSoulFireAccessor.get(this).ifPresent(onSoulFireAccessor -> OnSoulFireAccessor.get(oldPlayer).ifPresent(oldOnSoulFireAccessor -> onSoulFireAccessor.setOnSoulFire(oldOnSoulFireAccessor.getOnSoulFire())));
+			OnSoulFireAccessor.of(this).ifPresent(onSoulFireAccessor -> OnSoulFireAccessor.of(oldPlayer).ifPresent(oldOnSoulFireAccessor -> onSoulFireAccessor.setOnSoulFire(oldOnSoulFireAccessor.getOnSoulFire())));
 		}
 	}
 }

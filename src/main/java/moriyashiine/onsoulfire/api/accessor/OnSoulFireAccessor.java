@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import java.util.Optional;
 
 public interface OnSoulFireAccessor {
-	static Optional<OnSoulFireAccessor> get(Entity entity) {
+	static Optional<OnSoulFireAccessor> of(Entity entity) {
 		if (entity instanceof OnSoulFireAccessor) {
 			return Optional.of((OnSoulFireAccessor) entity);
 		}

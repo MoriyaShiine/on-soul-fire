@@ -13,8 +13,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 @Environment(EnvType.CLIENT)
 @Mixin(InGameOverlayRenderer.class)
 public class RenderPlayerSoulFire {
@@ -22,12 +20,9 @@ public class RenderPlayerSoulFire {
 	
 	@Redirect(method = "renderFireOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/SpriteIdentifier;getSprite()Lnet/minecraft/client/texture/Sprite;"))
 	private static Sprite getSprite(SpriteIdentifier obj, MinecraftClient minecraftClient) {
-		AtomicReference<Sprite> sprite = new AtomicReference<>(obj.getSprite());
-		OnSoulFireAccessor.get(minecraftClient.player).ifPresent(onSoulFireAccessor -> {
-			if (onSoulFireAccessor.getOnSoulFire()) {
-				sprite.set(SOUL_FIRE_1.getSprite());
-			}
-		});
-		return sprite.get();
+		if (OnSoulFireAccessor.of(minecraftClient.player).map(OnSoulFireAccessor::getOnSoulFire).orElse(false)) {
+			return SOUL_FIRE_1.getSprite();
+		}
+		return obj.getSprite();
 	}
 }
