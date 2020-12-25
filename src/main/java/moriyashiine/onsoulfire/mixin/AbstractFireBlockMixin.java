@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractFireBlock.class)
-public class SetSoulFire {
+public class AbstractFireBlockMixin {
 	@Inject(method = "onEntityCollision", at = @At("HEAD"))
 	private void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo callbackInfo) {
 		OnSoulFireAccessor.of(entity).ifPresent(onSoulFireAccessor -> onSoulFireAccessor.setOnSoulFire(state.getBlock() instanceof SoulFireBlock));

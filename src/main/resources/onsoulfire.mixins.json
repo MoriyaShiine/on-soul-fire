@@ -4,14 +4,14 @@
   "package": "moriyashiine.onsoulfire.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-	"OnSoulFireHandler",
-	"OnSoulFireHandler$Server",
-	"SetSoulFire",
-	"SoulFireDamage"
+	"AbstractFireBlockMixin",
+	"EntityMixin",
+	"LivingEntityMixin",
+	"ServerPlayerEntityMixin"
   ],
   "client": [
-	"client.RenderEntitySoulFire",
-	"client.RenderPlayerSoulFire"
+	"client.EntityRenderDispatcherMixin",
+	"client.InGameOverlayRendererMixin"
   ],
   "injectors": {
 	"defaultRequire": 1

@@ -1,15 +1,11 @@
 package moriyashiine.onsoulfire.mixin;
 
-import com.mojang.authlib.GameProfile;
 import moriyashiine.onsoulfire.api.accessor.OnSoulFireAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
-public abstract class OnSoulFireHandler implements OnSoulFireAccessor {
+public abstract class EntityMixin implements OnSoulFireAccessor {
 	private static final TrackedData<Boolean> ON_SOUL_FIRE = DataTracker.registerData(Entity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	@Shadow
@@ -43,6 +39,13 @@ public abstract class OnSoulFireHandler implements OnSoulFireAccessor {
 		dataTracker.set(ON_SOUL_FIRE, onSoulFire);
 	}
 	
+	@Inject(method = "tick", at = @At("TAIL"))
+	private void tick(CallbackInfo callbackInfo) {
+		if (!world.isClient && getFireTicks() <= 0 && getOnSoulFire()) {
+			setOnSoulFire(false);
+		}
+	}
+	
 	@Inject(method = "fromTag", at = @At("HEAD"))
 	private void fromTag(CompoundTag tag, CallbackInfo callbackInfo) {
 		setOnSoulFire(tag.getBoolean("OnSoulFire"));
@@ -54,26 +57,7 @@ public abstract class OnSoulFireHandler implements OnSoulFireAccessor {
 	}
 	
 	@Inject(method = "<init>", at = @At("TAIL"))
-	private void initDataTracker(CallbackInfo callbackInfo) {
+	private void init(CallbackInfo callbackInfo) {
 		dataTracker.startTracking(ON_SOUL_FIRE, false);
-	}
-	
-	@Inject(method = "tick", at = @At("TAIL"))
-	private void tick(CallbackInfo callbackInfo) {
-		if (!world.isClient && getFireTicks() <= 0 && getOnSoulFire()) {
-			setOnSoulFire(false);
-		}
-	}
-	
-	@Mixin(ServerPlayerEntity.class)
-	private abstract static class Server extends PlayerEntity {
-		public Server(World world, BlockPos pos, float yaw, GameProfile profile) {
-			super(world, pos, yaw, profile);
-		}
-		
-		@Inject(method = "copyFrom", at = @At("TAIL"))
-		private void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
-			OnSoulFireAccessor.of(this).ifPresent(onSoulFireAccessor -> OnSoulFireAccessor.of(oldPlayer).ifPresent(oldOnSoulFireAccessor -> onSoulFireAccessor.setOnSoulFire(oldOnSoulFireAccessor.getOnSoulFire())));
-		}
 	}
 }
