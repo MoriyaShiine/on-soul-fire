@@ -18,11 +18,8 @@
 	"onsoulfire.mixins.json"
   ],
   "depends": {
-	"fabricloader": ">=0.10.0",
+	"fabricloader": ">=0.11.0",
 	"fabric": "*",
-	"minecraft": "1.16.4"
-  },
-  "suggests": {
-	"flamingo": "*"
+	"minecraft": "1.16.5"
   }
 }
