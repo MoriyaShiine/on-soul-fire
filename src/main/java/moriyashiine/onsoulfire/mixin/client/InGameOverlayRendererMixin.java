@@ -1,6 +1,6 @@
 package moriyashiine.onsoulfire.mixin.client;
 
-import moriyashiine.onsoulfire.api.accessor.OnSoulFireAccessor;
+import moriyashiine.onsoulfire.interfaces.OnSoulFireAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+@SuppressWarnings("ConstantConditions")
 @Environment(EnvType.CLIENT)
 @Mixin(InGameOverlayRenderer.class)
 public class InGameOverlayRendererMixin {
@@ -20,7 +21,7 @@ public class InGameOverlayRendererMixin {
 	
 	@Redirect(method = "renderFireOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/SpriteIdentifier;getSprite()Lnet/minecraft/client/texture/Sprite;"))
 	private static Sprite getSprite(SpriteIdentifier obj, MinecraftClient minecraftClient) {
-		if (OnSoulFireAccessor.of(minecraftClient.player).map(OnSoulFireAccessor::getOnSoulFire).orElse(false)) {
+		if (((OnSoulFireAccessor) minecraftClient.player).getOnSoulFire()) {
 			return SOUL_FIRE_1.getSprite();
 		}
 		return obj.getSprite();

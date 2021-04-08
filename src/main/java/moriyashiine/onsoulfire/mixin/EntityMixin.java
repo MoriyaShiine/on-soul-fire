@@ -1,6 +1,6 @@
 package moriyashiine.onsoulfire.mixin;
 
-import moriyashiine.onsoulfire.api.accessor.OnSoulFireAccessor;
+import moriyashiine.onsoulfire.interfaces.OnSoulFireAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -46,12 +46,12 @@ public abstract class EntityMixin implements OnSoulFireAccessor {
 		}
 	}
 	
-	@Inject(method = "fromTag", at = @At("HEAD"))
+	@Inject(method = "fromTag", at = @At("TAIL"))
 	private void fromTag(CompoundTag tag, CallbackInfo callbackInfo) {
 		setOnSoulFire(tag.getBoolean("OnSoulFire"));
 	}
 	
-	@Inject(method = "toTag", at = @At("HEAD"))
+	@Inject(method = "toTag", at = @At("TAIL"))
 	private void toTag(CompoundTag tag, CallbackInfoReturnable<CompoundTag> callbackInfo) {
 		tag.putBoolean("OnSoulFire", getOnSoulFire());
 	}
