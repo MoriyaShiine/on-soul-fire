@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -46,14 +46,14 @@ public abstract class EntityMixin implements OnSoulFireAccessor {
 		}
 	}
 	
-	@Inject(method = "fromTag", at = @At("TAIL"))
-	private void fromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		setOnSoulFire(tag.getBoolean("OnSoulFire"));
+	@Inject(method = "readNbt", at = @At("TAIL"))
+	private void readNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		setOnSoulFire(nbt.getBoolean("OnSoulFire"));
 	}
 	
-	@Inject(method = "toTag", at = @At("TAIL"))
-	private void toTag(CompoundTag tag, CallbackInfoReturnable<CompoundTag> callbackInfo) {
-		tag.putBoolean("OnSoulFire", getOnSoulFire());
+	@Inject(method = "writeNbt", at = @At("TAIL"))
+	private void writeNbt(NbtCompound nbt, CallbackInfoReturnable<NbtCompound> callbackInfo) {
+		nbt.putBoolean("OnSoulFire", getOnSoulFire());
 	}
 	
 	@Inject(method = "<init>", at = @At("TAIL"))
