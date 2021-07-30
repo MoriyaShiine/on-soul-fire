@@ -1,6 +1,6 @@
 package moriyashiine.onsoulfire.mixin.client;
 
-import moriyashiine.onsoulfire.interfaces.OnSoulFireAccessor;
+import moriyashiine.onsoulfire.api.component.OnSoulFireComponent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -22,18 +22,18 @@ public class EntityRenderDispatcherMixin {
 	private static final SpriteIdentifier SOUL_FIRE_1 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("block/soul_fire_1"));
 	
 	@Redirect(method = "renderFire", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/SpriteIdentifier;getSprite()Lnet/minecraft/client/texture/Sprite;", ordinal = 0))
-	private Sprite getSprite0(SpriteIdentifier obj, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
-		if (((OnSoulFireAccessor) entity).getOnSoulFire()) {
+	private Sprite getSprite0(SpriteIdentifier spriteIdentifier, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
+		if (OnSoulFireComponent.get(entity).isOnSoulFire()) {
 			return SOUL_FIRE_0.getSprite();
 		}
-		return obj.getSprite();
+		return spriteIdentifier.getSprite();
 	}
 	
 	@Redirect(method = "renderFire", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/SpriteIdentifier;getSprite()Lnet/minecraft/client/texture/Sprite;", ordinal = 1))
-	private Sprite getSprite1(SpriteIdentifier obj, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
-		if (((OnSoulFireAccessor) entity).getOnSoulFire()) {
+	private Sprite getSprite1(SpriteIdentifier spriteIdentifier, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
+		if (OnSoulFireComponent.get(entity).isOnSoulFire()) {
 			return SOUL_FIRE_1.getSprite();
 		}
-		return obj.getSprite();
+		return spriteIdentifier.getSprite();
 	}
 }

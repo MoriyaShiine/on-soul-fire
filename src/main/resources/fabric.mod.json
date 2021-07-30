@@ -15,8 +15,13 @@
   "icon": "assets/onsoulfire/icon.png",
   "environment": "*",
   "entrypoints": {
-	"main": [
-	  "moriyashiine.onsoulfire.OnSoulFire"
+	"cardinal-components-entity": [
+	  "moriyashiine.onsoulfire.common.registry.OSFComponents"
+	]
+  },
+  "custom": {
+	"cardinal-components": [
+	  "onsoulfire:on_soul_fire"
 	]
   },
   "mixins": [
