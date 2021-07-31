@@ -19,11 +19,6 @@
 	  "moriyashiine.onsoulfire.common.registry.OSFComponents"
 	]
   },
-  "custom": {
-	"cardinal-components": [
-	  "onsoulfire:on_soul_fire"
-	]
-  },
   "mixins": [
 	"onsoulfire.mixins.json"
   ],
@@ -31,5 +26,10 @@
 	"fabricloader": "*",
 	"fabric": "*",
 	"minecraft": "1.17.*"
+  },
+  "custom": {
+	"cardinal-components": [
+	  "onsoulfire:on_soul_fire"
+	]
   }
 }
