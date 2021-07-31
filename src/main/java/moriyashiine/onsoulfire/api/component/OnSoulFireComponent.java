@@ -9,11 +9,11 @@ import net.minecraft.nbt.NbtCompound;
 import java.util.Optional;
 
 public class OnSoulFireComponent implements AutoSyncedComponent, ServerTickingComponent {
-	private final Entity entity;
+	private final Entity obj;
 	private boolean onSoulFire = false;
 	
-	public OnSoulFireComponent(Entity entity) {
-		this.entity = entity;
+	public OnSoulFireComponent(Entity obj) {
+		this.obj = obj;
 	}
 	
 	public boolean isOnSoulFire() {
@@ -22,7 +22,7 @@ public class OnSoulFireComponent implements AutoSyncedComponent, ServerTickingCo
 	
 	public void setOnSoulFire(boolean onSoulFire) {
 		this.onSoulFire = onSoulFire;
-		OSFComponents.ON_SOUL_FIRE_COMPONENT.sync(entity);
+		OSFComponents.ON_SOUL_FIRE_COMPONENT.sync(obj);
 	}
 	
 	@Override
@@ -37,17 +37,17 @@ public class OnSoulFireComponent implements AutoSyncedComponent, ServerTickingCo
 	
 	@Override
 	public void serverTick() {
-		if (entity.getFireTicks() <= 0 && isOnSoulFire()) {
+		if (obj.getFireTicks() <= 0 && isOnSoulFire()) {
 			setOnSoulFire(false);
 		}
 	}
 	
-	public static OnSoulFireComponent get(Entity entity) {
-		return OSFComponents.ON_SOUL_FIRE_COMPONENT.get(entity);
+	public static OnSoulFireComponent get(Entity obj) {
+		return OSFComponents.ON_SOUL_FIRE_COMPONENT.get(obj);
 	}
 	
 	@SuppressWarnings("unused")
-	public static Optional<OnSoulFireComponent> maybeGet(Entity entity) {
-		return OSFComponents.ON_SOUL_FIRE_COMPONENT.maybeGet(entity);
+	public static Optional<OnSoulFireComponent> maybeGet(Entity obj) {
+		return OSFComponents.ON_SOUL_FIRE_COMPONENT.maybeGet(obj);
 	}
 }
