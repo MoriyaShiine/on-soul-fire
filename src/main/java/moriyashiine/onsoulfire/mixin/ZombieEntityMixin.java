@@ -1,6 +1,6 @@
 package moriyashiine.onsoulfire.mixin;
 
-import moriyashiine.onsoulfire.api.component.OnSoulFireComponent;
+import moriyashiine.onsoulfire.common.registry.ModComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.HostileEntity;
@@ -18,9 +18,9 @@ public abstract class ZombieEntityMixin extends HostileEntity {
 	}
 	
 	@Inject(method = "tryAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setOnFireFor(I)V"))
-	private void tryAttack(Entity target, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (OnSoulFireComponent.get(this).isOnSoulFire()) {
-			OnSoulFireComponent.get(target).setOnSoulFire(true);
+	private void setTargetOnSoulFire(Entity target, CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (ModComponents.ON_SOUL_FIRE_COMPONENT.get(this).isOnSoulFire()) {
+			ModComponents.ON_SOUL_FIRE_COMPONENT.get(target).setOnSoulFire(true);
 		}
 	}
 }

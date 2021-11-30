@@ -1,12 +1,10 @@
-package moriyashiine.onsoulfire.api.component;
+package moriyashiine.onsoulfire.common.component.entity;
 
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
-import moriyashiine.onsoulfire.common.registry.OSFComponents;
+import moriyashiine.onsoulfire.common.registry.ModComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
-
-import java.util.Optional;
 
 public class OnSoulFireComponent implements AutoSyncedComponent, ServerTickingComponent {
 	private final Entity obj;
@@ -14,15 +12,6 @@ public class OnSoulFireComponent implements AutoSyncedComponent, ServerTickingCo
 	
 	public OnSoulFireComponent(Entity obj) {
 		this.obj = obj;
-	}
-	
-	public boolean isOnSoulFire() {
-		return onSoulFire;
-	}
-	
-	public void setOnSoulFire(boolean onSoulFire) {
-		this.onSoulFire = onSoulFire;
-		OSFComponents.ON_SOUL_FIRE_COMPONENT.sync(obj);
 	}
 	
 	@Override
@@ -42,12 +31,12 @@ public class OnSoulFireComponent implements AutoSyncedComponent, ServerTickingCo
 		}
 	}
 	
-	public static OnSoulFireComponent get(Entity obj) {
-		return OSFComponents.ON_SOUL_FIRE_COMPONENT.get(obj);
+	public boolean isOnSoulFire() {
+		return onSoulFire;
 	}
 	
-	@SuppressWarnings("unused")
-	public static Optional<OnSoulFireComponent> maybeGet(Entity obj) {
-		return OSFComponents.ON_SOUL_FIRE_COMPONENT.maybeGet(obj);
+	public void setOnSoulFire(boolean onSoulFire) {
+		this.onSoulFire = onSoulFire;
+		ModComponents.ON_SOUL_FIRE_COMPONENT.sync(obj);
 	}
 }

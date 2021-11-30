@@ -9,23 +9,25 @@
   ],
   "contact": {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/on-soul-fire",
-	"sources": "https://github.com/MoriyaShiine/on-soul-fire"
+	"sources": "https://github.com/MoriyaShiine/on-soul-fire",
+	"issues": "https://github.com/MoriyaShiine/on-soul-fire/issues"
   },
   "license": "CC BY-NC-ND 4.0",
   "icon": "assets/onsoulfire/icon.png",
   "environment": "*",
   "entrypoints": {
 	"cardinal-components-entity": [
-	  "moriyashiine.onsoulfire.common.registry.OSFComponents"
+	  "moriyashiine.onsoulfire.common.registry.ModComponents"
 	]
   },
   "mixins": [
 	"onsoulfire.mixins.json"
   ],
   "depends": {
-	"fabricloader": "*",
-	"fabric": "*",
-	"minecraft": "1.17.*"
+	"fabricloader": ">=0.12.6",
+	"fabric": ">=0.43.1",
+	"minecraft": "1.18.x",
+	"java": ">=17"
   },
   "custom": {
 	"cardinal-components": [

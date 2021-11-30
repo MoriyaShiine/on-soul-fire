@@ -1,6 +1,6 @@
 package moriyashiine.onsoulfire.mixin;
 
-import moriyashiine.onsoulfire.api.component.OnSoulFireComponent;
+import moriyashiine.onsoulfire.common.registry.ModComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -17,9 +17,9 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 	
 	@ModifyVariable(method = "damage", at = @At("HEAD"))
-	private float damage(float amount, DamageSource source) {
-		if (source == DamageSource.ON_FIRE && OnSoulFireComponent.get(this).isOnSoulFire()) {
-			return amount * 2;
+	private float doubleDamageIfOnSoulFire(float amount, DamageSource source) {
+		if (source == DamageSource.ON_FIRE && ModComponents.ON_SOUL_FIRE_COMPONENT.get(this).isOnSoulFire()) {
+			amount *= 2;
 		}
 		return amount;
 	}
