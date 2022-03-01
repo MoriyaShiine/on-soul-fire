@@ -16,9 +16,9 @@ public abstract class ZombieEntityMixin extends HostileEntity {
 	protected ZombieEntityMixin(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	@Inject(method = "tryAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setOnFireFor(I)V"))
-	private void setTargetOnSoulFire(Entity target, CallbackInfoReturnable<Boolean> callbackInfo) {
+	private void onsoulfire$setTargetOnSoulFire(Entity target, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (ModComponents.ON_SOUL_FIRE_COMPONENT.get(this).isOnSoulFire()) {
 			ModComponents.ON_SOUL_FIRE_COMPONENT.get(target).setOnSoulFire(true);
 		}

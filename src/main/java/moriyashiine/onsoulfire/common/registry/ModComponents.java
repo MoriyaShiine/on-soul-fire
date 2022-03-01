@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 
 public class ModComponents implements EntityComponentInitializer {
 	public static final ComponentKey<OnSoulFireComponent> ON_SOUL_FIRE_COMPONENT = ComponentRegistry.getOrCreate(new Identifier("onsoulfire", "on_soul_fire"), OnSoulFireComponent.class);
-	
+
 	@Override
 	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
 		registry.beginRegistration(Entity.class, ON_SOUL_FIRE_COMPONENT).respawnStrategy(RespawnCopyStrategy.LOSSLESS_ONLY).end(OnSoulFireComponent::new);

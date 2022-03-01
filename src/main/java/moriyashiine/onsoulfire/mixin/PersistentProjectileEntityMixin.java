@@ -17,9 +17,9 @@ public abstract class PersistentProjectileEntityMixin extends Entity {
 	public PersistentProjectileEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@Inject(method = "onEntityHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setOnFireFor(I)V"), locals = LocalCapture.CAPTURE_FAILHARD)
-	private void setTargetOnSoulFire(EntityHitResult entityHitResult, CallbackInfo ci, Entity entity) {
+	private void onsoulfire$setTargetOnSoulFire(EntityHitResult entityHitResult, CallbackInfo ci, Entity entity) {
 		if (ModComponents.ON_SOUL_FIRE_COMPONENT.get(this).isOnSoulFire()) {
 			ModComponents.ON_SOUL_FIRE_COMPONENT.get(entity).setOnSoulFire(true);
 		}

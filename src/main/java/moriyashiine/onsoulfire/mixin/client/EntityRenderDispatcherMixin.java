@@ -23,19 +23,19 @@ public class EntityRenderDispatcherMixin {
 	private static final SpriteIdentifier SOUL_FIRE_0 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("block/soul_fire_0"));
 	@Unique
 	private static final SpriteIdentifier SOUL_FIRE_1 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("block/soul_fire_1"));
-	
+
 	@ModifyVariable(method = "renderFire", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/util/SpriteIdentifier;getSprite()Lnet/minecraft/client/texture/Sprite;", ordinal = 0), ordinal = 0)
 	private Sprite renderSoulFire0(Sprite obj, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
 		if (ModComponents.ON_SOUL_FIRE_COMPONENT.get(entity).isOnSoulFire()) {
-			obj = SOUL_FIRE_0.getSprite();
+			return SOUL_FIRE_0.getSprite();
 		}
 		return obj;
 	}
-	
+
 	@ModifyVariable(method = "renderFire", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/util/SpriteIdentifier;getSprite()Lnet/minecraft/client/texture/Sprite;", ordinal = 1), ordinal = 1)
 	private Sprite renderSoulFire1(Sprite obj, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
 		if (ModComponents.ON_SOUL_FIRE_COMPONENT.get(entity).isOnSoulFire()) {
-			obj = SOUL_FIRE_1.getSprite();
+			return SOUL_FIRE_1.getSprite();
 		}
 		return obj;
 	}
