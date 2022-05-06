@@ -1,6 +1,6 @@
 package moriyashiine.onsoulfire.mixin;
 
-import moriyashiine.onsoulfire.common.registry.ModComponents;
+import moriyashiine.onsoulfire.common.registry.ModEntityComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -20,8 +20,12 @@ public abstract class PersistentProjectileEntityMixin extends Entity {
 
 	@Inject(method = "onEntityHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setOnFireFor(I)V"), locals = LocalCapture.CAPTURE_FAILHARD)
 	private void onsoulfire$setTargetOnSoulFire(EntityHitResult entityHitResult, CallbackInfo ci, Entity entity) {
-		if (ModComponents.ON_SOUL_FIRE_COMPONENT.get(this).isOnSoulFire()) {
-			ModComponents.ON_SOUL_FIRE_COMPONENT.get(entity).setOnSoulFire(true);
-		}
+		ModEntityComponents.ON_SOUL_FIRE_COMPONENT.maybeGet(entity).ifPresent(onSoulFireComponent -> {
+			boolean onSoulFire = ModEntityComponents.ON_SOUL_FIRE_COMPONENT.get(this).isOnSoulFire();
+			if (onSoulFireComponent.isOnSoulFire() != onSoulFire) {
+				onSoulFireComponent.setOnSoulFire(onSoulFire);
+				onSoulFireComponent.sync();
+			}
+		});
 	}
 }

@@ -1,6 +1,6 @@
 package moriyashiine.onsoulfire.mixin.client;
 
-import moriyashiine.onsoulfire.common.registry.ModComponents;
+import moriyashiine.onsoulfire.common.registry.ModEntityComponents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -20,23 +20,29 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(EntityRenderDispatcher.class)
 public class EntityRenderDispatcherMixin {
 	@Unique
-	private static final SpriteIdentifier SOUL_FIRE_0 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("block/soul_fire_0"));
+	private static Sprite SOUL_FIRE_0;
 	@Unique
-	private static final SpriteIdentifier SOUL_FIRE_1 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("block/soul_fire_1"));
+	private static Sprite SOUL_FIRE_1;
 
 	@ModifyVariable(method = "renderFire", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/util/SpriteIdentifier;getSprite()Lnet/minecraft/client/texture/Sprite;", ordinal = 0), ordinal = 0)
-	private Sprite renderSoulFire0(Sprite obj, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
-		if (ModComponents.ON_SOUL_FIRE_COMPONENT.get(entity).isOnSoulFire()) {
-			return SOUL_FIRE_0.getSprite();
+	private Sprite onsoulfire$renderSoulFire0(Sprite value, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
+		if (ModEntityComponents.ON_SOUL_FIRE_COMPONENT.get(entity).isOnSoulFire()) {
+			if (SOUL_FIRE_0 == null) {
+				SOUL_FIRE_0 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("block/soul_fire_0")).getSprite();
+			}
+			return SOUL_FIRE_0;
 		}
-		return obj;
+		return value;
 	}
 
 	@ModifyVariable(method = "renderFire", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/util/SpriteIdentifier;getSprite()Lnet/minecraft/client/texture/Sprite;", ordinal = 1), ordinal = 1)
-	private Sprite renderSoulFire1(Sprite obj, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
-		if (ModComponents.ON_SOUL_FIRE_COMPONENT.get(entity).isOnSoulFire()) {
-			return SOUL_FIRE_1.getSprite();
+	private Sprite onsoulfire$renderSoulFire1(Sprite value, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
+		if (ModEntityComponents.ON_SOUL_FIRE_COMPONENT.get(entity).isOnSoulFire()) {
+			if (SOUL_FIRE_1 == null) {
+				SOUL_FIRE_1 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("block/soul_fire_1")).getSprite();
+			}
+			return SOUL_FIRE_1;
 		}
-		return obj;
+		return value;
 	}
 }

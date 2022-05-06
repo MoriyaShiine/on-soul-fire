@@ -1,6 +1,6 @@
 package moriyashiine.onsoulfire.mixin.client;
 
-import moriyashiine.onsoulfire.common.registry.ModComponents;
+import moriyashiine.onsoulfire.common.registry.ModEntityComponents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -18,14 +18,17 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(InGameOverlayRenderer.class)
 public class InGameOverlayRendererMixin {
 	@Unique
-	private static final SpriteIdentifier SOUL_FIRE_1 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("block/soul_fire_1"));
+	private static Sprite SOUL_FIRE_1;
 
 	@SuppressWarnings("ConstantConditions")
 	@ModifyVariable(method = "renderFireOverlay", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/util/SpriteIdentifier;getSprite()Lnet/minecraft/client/texture/Sprite;"))
-	private static Sprite renderSoulFire(Sprite obj, MinecraftClient client) {
-		if (ModComponents.ON_SOUL_FIRE_COMPONENT.get(client.player).isOnSoulFire()) {
-			return SOUL_FIRE_1.getSprite();
+	private static Sprite onsoulfire$renderSoulFire(Sprite value, MinecraftClient client) {
+		if (ModEntityComponents.ON_SOUL_FIRE_COMPONENT.get(client.player).isOnSoulFire()) {
+			if (SOUL_FIRE_1 == null) {
+				SOUL_FIRE_1 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("block/soul_fire_1")).getSprite();
+			}
+			return SOUL_FIRE_1;
 		}
-		return obj;
+		return value;
 	}
 }

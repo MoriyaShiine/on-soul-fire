@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
 	"AbstractFireBlockMixin",
+	"CampfireBlockMixin",
 	"LivingEntityMixin",
 	"PersistentProjectileEntityMixin",
 	"ZombieEntityMixin"

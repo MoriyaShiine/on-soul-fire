@@ -16,8 +16,14 @@
   "icon": "assets/onsoulfire/icon.png",
   "environment": "*",
   "entrypoints": {
+	"main": [
+	  "moriyashiine.onsoulfire.common.OnSoulFire"
+	],
 	"cardinal-components-entity": [
-	  "moriyashiine.onsoulfire.common.registry.ModComponents"
+	  "moriyashiine.onsoulfire.common.registry.ModEntityComponents"
+	],
+	"modmenu": [
+	  "moriyashiine.onsoulfire.client.integration.ModMenuIntegration"
 	]
   },
   "mixins": [
@@ -27,7 +33,8 @@
 	"fabricloader": ">=0.13.3",
 	"minecraft": "~1.18.2",
 	"java": ">=17",
-	"fabric": ">=0.47.8"
+	"cloth-config2": ">=6.2.57",
+	"fabric": ">=0.48.0"
   },
   "custom": {
 	"cardinal-components": [
