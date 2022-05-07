@@ -18,7 +18,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class AbstractFireBlockMixin {
 	@Inject(method = "onEntityCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
 	private void onsoulfire$setOnSoulFire(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
-		ModEntityComponents.ON_SOUL_FIRE_COMPONENT.get(entity).setOnSoulFire(state.getBlock() instanceof SoulFireBlock);
+		if (!world.isClient) {
+			ModEntityComponents.ON_SOUL_FIRE_COMPONENT.maybeGet(entity).ifPresent(onSoulFireComponent -> {
+				boolean onSoulFire = state.getBlock() instanceof SoulFireBlock;
+				if (onSoulFireComponent.isOnSoulFire() != onSoulFire) {
+					onSoulFireComponent.setOnSoulFire(onSoulFire);
+					onSoulFireComponent.sync();
+				}
+			});
+		}
 	}
 
 	@SuppressWarnings("ConstantConditions")
