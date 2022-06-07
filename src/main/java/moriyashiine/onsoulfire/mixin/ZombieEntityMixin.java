@@ -1,5 +1,10 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.onsoulfire.mixin;
 
+import moriyashiine.onsoulfire.common.component.entity.OnSoulFireComponent;
 import moriyashiine.onsoulfire.common.registry.ModEntityComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -19,12 +24,11 @@ public abstract class ZombieEntityMixin extends HostileEntity {
 
 	@Inject(method = "tryAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setOnFireFor(I)V"))
 	private void onsoulfire$setTargetOnSoulFire(Entity target, CallbackInfoReturnable<Boolean> callbackInfo) {
-		ModEntityComponents.ON_SOUL_FIRE_COMPONENT.maybeGet(target).ifPresent(onSoulFireComponent -> {
-			boolean onSoulFire = ModEntityComponents.ON_SOUL_FIRE_COMPONENT.get(this).isOnSoulFire();
-			if (onSoulFireComponent.isOnSoulFire() != onSoulFire) {
-				onSoulFireComponent.setOnSoulFire(onSoulFire);
-				onSoulFireComponent.sync();
-			}
-		});
+		OnSoulFireComponent onSoulFireComponent = target.getComponent(ModEntityComponents.ON_SOUL_FIRE);
+		boolean onSoulFire = getComponent(ModEntityComponents.ON_SOUL_FIRE).isOnSoulFire();
+		if (onSoulFireComponent.isOnSoulFire() != onSoulFire) {
+			onSoulFireComponent.setOnSoulFire(onSoulFire);
+			onSoulFireComponent.sync();
+		}
 	}
 }

@@ -1,6 +1,11 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.onsoulfire.mixin;
 
-import moriyashiine.onsoulfire.common.OnSoulFire;
+import moriyashiine.onsoulfire.common.ModConfig;
+import moriyashiine.onsoulfire.common.component.entity.OnSoulFireComponent;
 import moriyashiine.onsoulfire.common.registry.ModEntityComponents;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BlockState;
@@ -19,13 +24,12 @@ public class AbstractFireBlockMixin {
 	@Inject(method = "onEntityCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
 	private void onsoulfire$setOnSoulFire(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
 		if (!world.isClient) {
-			ModEntityComponents.ON_SOUL_FIRE_COMPONENT.maybeGet(entity).ifPresent(onSoulFireComponent -> {
-				boolean onSoulFire = state.getBlock() instanceof SoulFireBlock;
-				if (onSoulFireComponent.isOnSoulFire() != onSoulFire) {
-					onSoulFireComponent.setOnSoulFire(onSoulFire);
-					onSoulFireComponent.sync();
-				}
-			});
+			OnSoulFireComponent onSoulFireComponent = entity.getComponent(ModEntityComponents.ON_SOUL_FIRE);
+			boolean onSoulFire = state.getBlock() instanceof SoulFireBlock;
+			if (onSoulFireComponent.isOnSoulFire() != onSoulFire) {
+				onSoulFireComponent.setOnSoulFire(onSoulFire);
+				onSoulFireComponent.sync();
+			}
 		}
 	}
 
@@ -33,7 +37,7 @@ public class AbstractFireBlockMixin {
 	@ModifyArg(method = "onEntityCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
 	private float onsoulfire$soulFireBlockDamageMultiplier(float value) {
 		if (AbstractFireBlock.class.cast(this) instanceof SoulFireBlock) {
-			return value * OnSoulFire.getConfig().soulFireBlockDamageMultiplier;
+			return value * ModConfig.soulFireBlockDamageMultiplier;
 		}
 		return value;
 	}

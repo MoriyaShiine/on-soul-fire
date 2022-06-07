@@ -1,5 +1,10 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.onsoulfire.mixin;
 
+import moriyashiine.onsoulfire.common.component.entity.OnSoulFireComponent;
 import moriyashiine.onsoulfire.common.registry.ModEntityComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -20,12 +25,11 @@ public abstract class PersistentProjectileEntityMixin extends Entity {
 
 	@Inject(method = "onEntityHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setOnFireFor(I)V"), locals = LocalCapture.CAPTURE_FAILHARD)
 	private void onsoulfire$setTargetOnSoulFire(EntityHitResult entityHitResult, CallbackInfo ci, Entity entity) {
-		ModEntityComponents.ON_SOUL_FIRE_COMPONENT.maybeGet(entity).ifPresent(onSoulFireComponent -> {
-			boolean onSoulFire = ModEntityComponents.ON_SOUL_FIRE_COMPONENT.get(this).isOnSoulFire();
-			if (onSoulFireComponent.isOnSoulFire() != onSoulFire) {
-				onSoulFireComponent.setOnSoulFire(onSoulFire);
-				onSoulFireComponent.sync();
-			}
-		});
+		OnSoulFireComponent onSoulFireComponent = entity.getComponent(ModEntityComponents.ON_SOUL_FIRE);
+		boolean onSoulFire = getComponent(ModEntityComponents.ON_SOUL_FIRE).isOnSoulFire();
+		if (onSoulFireComponent.isOnSoulFire() != onSoulFire) {
+			onSoulFireComponent.setOnSoulFire(onSoulFire);
+			onSoulFireComponent.sync();
+		}
 	}
 }

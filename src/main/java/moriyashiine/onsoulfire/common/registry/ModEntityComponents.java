@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.onsoulfire.common.registry;
 
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
@@ -10,10 +14,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 
 public class ModEntityComponents implements EntityComponentInitializer {
-	public static final ComponentKey<OnSoulFireComponent> ON_SOUL_FIRE_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(OnSoulFire.MOD_ID, "on_soul_fire"), OnSoulFireComponent.class);
+	public static final ComponentKey<OnSoulFireComponent> ON_SOUL_FIRE = ComponentRegistry.getOrCreate(new Identifier(OnSoulFire.MOD_ID, "on_soul_fire"), OnSoulFireComponent.class);
 
 	@Override
 	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
-		registry.registerFor(Entity.class, ON_SOUL_FIRE_COMPONENT, OnSoulFireComponent::new);
+		registry.registerFor(Entity.class, ON_SOUL_FIRE, OnSoulFireComponent::new);
 	}
 }

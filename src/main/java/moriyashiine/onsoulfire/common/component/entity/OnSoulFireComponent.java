@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.onsoulfire.common.component.entity;
 
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -16,12 +20,12 @@ public class OnSoulFireComponent implements AutoSyncedComponent, ServerTickingCo
 
 	@Override
 	public void readFromNbt(NbtCompound tag) {
-		setOnSoulFire(tag.getBoolean("OnSoulFire"));
+		onSoulFire = tag.getBoolean("OnSoulFire");
 	}
 
 	@Override
 	public void writeToNbt(NbtCompound tag) {
-		tag.putBoolean("OnSoulFire", isOnSoulFire());
+		tag.putBoolean("OnSoulFire", onSoulFire);
 	}
 
 	@Override
@@ -33,7 +37,7 @@ public class OnSoulFireComponent implements AutoSyncedComponent, ServerTickingCo
 	}
 
 	public void sync() {
-		ModEntityComponents.ON_SOUL_FIRE_COMPONENT.sync(obj);
+		obj.syncComponent(ModEntityComponents.ON_SOUL_FIRE);
 	}
 
 	public boolean isOnSoulFire() {

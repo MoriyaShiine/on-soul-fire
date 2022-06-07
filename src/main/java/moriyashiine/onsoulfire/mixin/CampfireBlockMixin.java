@@ -1,6 +1,10 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.onsoulfire.mixin;
 
-import moriyashiine.onsoulfire.common.OnSoulFire;
+import moriyashiine.onsoulfire.common.ModConfig;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CampfireBlock;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,7 +17,7 @@ public class CampfireBlockMixin {
 	@ModifyArg(method = "onEntityCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
 	private float onsoulfire$soulFireBlockDamageMultiplier(float value) {
 		if (CampfireBlock.class.cast(this) == Blocks.SOUL_CAMPFIRE) {
-			return value * OnSoulFire.getConfig().soulFireBlockDamageMultiplier;
+			return value * ModConfig.soulFireBlockDamageMultiplier;
 		}
 		return value;
 	}

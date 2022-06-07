@@ -1,6 +1,10 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.onsoulfire.mixin;
 
-import moriyashiine.onsoulfire.common.OnSoulFire;
+import moriyashiine.onsoulfire.common.ModConfig;
 import moriyashiine.onsoulfire.common.registry.ModEntityComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -19,8 +23,8 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "damage", at = @At("HEAD"), argsOnly = true)
 	private float onsoulfire$onSoulFireDamageMultiplier(float amount, DamageSource source) {
-		if (source == DamageSource.ON_FIRE && ModEntityComponents.ON_SOUL_FIRE_COMPONENT.get(this).isOnSoulFire()) {
-			amount *= OnSoulFire.getConfig().onSoulFireDamageMultiplier;
+		if (source == DamageSource.ON_FIRE && ModEntityComponents.ON_SOUL_FIRE.get(this).isOnSoulFire()) {
+			amount *= ModConfig.onSoulFireDamageMultiplier;
 		}
 		return amount;
 	}

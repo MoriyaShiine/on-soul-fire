@@ -21,20 +21,16 @@
 	],
 	"cardinal-components-entity": [
 	  "moriyashiine.onsoulfire.common.registry.ModEntityComponents"
-	],
-	"modmenu": [
-	  "moriyashiine.onsoulfire.client.integration.ModMenuIntegration"
 	]
   },
   "mixins": [
 	"onsoulfire.mixins.json"
   ],
   "depends": {
-	"fabricloader": ">=0.13.3",
-	"minecraft": "~1.18.2",
+	"fabricloader": ">=0.14.6",
+	"minecraft": "1.19.x",
 	"java": ">=17",
-	"cloth-config2": ">=6.2.57",
-	"fabric": ">=0.48.0"
+	"fabric": ">=0.55.1"
   },
   "custom": {
 	"cardinal-components": [

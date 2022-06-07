@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.onsoulfire.mixin.client;
 
 import moriyashiine.onsoulfire.common.registry.ModEntityComponents;
@@ -23,7 +27,7 @@ public class InGameOverlayRendererMixin {
 	@SuppressWarnings("ConstantConditions")
 	@ModifyVariable(method = "renderFireOverlay", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/util/SpriteIdentifier;getSprite()Lnet/minecraft/client/texture/Sprite;"))
 	private static Sprite onsoulfire$renderSoulFire(Sprite value, MinecraftClient client) {
-		if (ModEntityComponents.ON_SOUL_FIRE_COMPONENT.get(client.player).isOnSoulFire()) {
+		if (client.player.getComponent(ModEntityComponents.ON_SOUL_FIRE).isOnSoulFire()) {
 			if (SOUL_FIRE_1 == null) {
 				SOUL_FIRE_1 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("block/soul_fire_1")).getSprite();
 			}
