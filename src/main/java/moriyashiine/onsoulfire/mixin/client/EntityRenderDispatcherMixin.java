@@ -30,7 +30,7 @@ public class EntityRenderDispatcherMixin {
 
 	@ModifyVariable(method = "renderFire", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/util/SpriteIdentifier;getSprite()Lnet/minecraft/client/texture/Sprite;", ordinal = 0), ordinal = 0)
 	private Sprite onsoulfire$renderSoulFire0(Sprite value, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
-		if (entity.getComponent(ModEntityComponents.ON_SOUL_FIRE).isOnSoulFire()) {
+		if (ModEntityComponents.ON_SOUL_FIRE.get(entity).isOnSoulFire()) {
 			if (SOUL_FIRE_0 == null) {
 				SOUL_FIRE_0 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("block/soul_fire_0")).getSprite();
 			}
@@ -41,7 +41,7 @@ public class EntityRenderDispatcherMixin {
 
 	@ModifyVariable(method = "renderFire", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/util/SpriteIdentifier;getSprite()Lnet/minecraft/client/texture/Sprite;", ordinal = 1), ordinal = 1)
 	private Sprite onsoulfire$renderSoulFire1(Sprite value, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
-		if (entity.getComponent(ModEntityComponents.ON_SOUL_FIRE).isOnSoulFire()) {
+		if (ModEntityComponents.ON_SOUL_FIRE.get(entity).isOnSoulFire()) {
 			if (SOUL_FIRE_1 == null) {
 				SOUL_FIRE_1 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("block/soul_fire_1")).getSprite();
 			}

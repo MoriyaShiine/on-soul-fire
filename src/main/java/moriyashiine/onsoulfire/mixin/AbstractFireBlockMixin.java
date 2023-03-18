@@ -24,7 +24,7 @@ public class AbstractFireBlockMixin {
 	@Inject(method = "onEntityCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
 	private void onsoulfire$setOnSoulFire(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
 		if (!world.isClient) {
-			OnSoulFireComponent onSoulFireComponent = entity.getComponent(ModEntityComponents.ON_SOUL_FIRE);
+			OnSoulFireComponent onSoulFireComponent = ModEntityComponents.ON_SOUL_FIRE.get(entity);
 			boolean onSoulFire = state.getBlock() instanceof SoulFireBlock;
 			if (onSoulFireComponent.isOnSoulFire() != onSoulFire) {
 				onSoulFireComponent.setOnSoulFire(onSoulFire);

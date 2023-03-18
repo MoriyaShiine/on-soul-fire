@@ -23,7 +23,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "damage", at = @At("HEAD"), argsOnly = true)
 	private float onsoulfire$onSoulFireDamageMultiplier(float amount, DamageSource source) {
-		if (source == DamageSource.ON_FIRE && ModEntityComponents.ON_SOUL_FIRE.get(this).isOnSoulFire()) {
+		if (source == world.getDamageSources().onFire() && ModEntityComponents.ON_SOUL_FIRE.get(this).isOnSoulFire()) {
 			amount *= ModConfig.onSoulFireDamageMultiplier;
 		}
 		return amount;
