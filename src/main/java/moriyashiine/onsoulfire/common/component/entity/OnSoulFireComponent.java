@@ -6,13 +6,14 @@ package moriyashiine.onsoulfire.common.component.entity;
 
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
-import moriyashiine.onsoulfire.common.registry.ModEntityComponents;
+import moriyashiine.onsoulfire.common.init.ModEntityComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 
 public class OnSoulFireComponent implements AutoSyncedComponent, ServerTickingComponent {
 	private final Entity obj;
 	private boolean onSoulFire = false;
+	private int syncTicks = 0;
 
 	public OnSoulFireComponent(Entity obj) {
 		this.obj = obj;
@@ -21,17 +22,22 @@ public class OnSoulFireComponent implements AutoSyncedComponent, ServerTickingCo
 	@Override
 	public void readFromNbt(NbtCompound tag) {
 		onSoulFire = tag.getBoolean("OnSoulFire");
+		syncTicks = tag.getInt("SyncTicks");
 	}
 
 	@Override
 	public void writeToNbt(NbtCompound tag) {
 		tag.putBoolean("OnSoulFire", onSoulFire);
+		tag.putInt("SyncTicks", syncTicks);
 	}
 
 	@Override
 	public void serverTick() {
-		if (obj.getFireTicks() <= 0 && isOnSoulFire()) {
+		if (isOnSoulFire() && obj.getFireTicks() <= 0) {
 			setOnSoulFire(false);
+			syncTicks = 3;
+		}
+		if (syncTicks > 0 && --syncTicks == 0) {
 			sync();
 		}
 	}

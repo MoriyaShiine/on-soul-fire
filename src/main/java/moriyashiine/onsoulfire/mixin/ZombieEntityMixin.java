@@ -5,7 +5,7 @@
 package moriyashiine.onsoulfire.mixin;
 
 import moriyashiine.onsoulfire.common.component.entity.OnSoulFireComponent;
-import moriyashiine.onsoulfire.common.registry.ModEntityComponents;
+import moriyashiine.onsoulfire.common.init.ModEntityComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.ZombieEntity;
 import org.spongepowered.asm.mixin.Mixin;

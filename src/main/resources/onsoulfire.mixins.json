@@ -6,7 +6,7 @@
 	"AbstractFireBlockMixin",
 	"CampfireBlockMixin",
 	"LivingEntityMixin",
-	"PersistentProjectileEntityMixin",
+	"ProjectileFireMixin",
 	"ZombieEntityMixin"
   ],
   "client": [

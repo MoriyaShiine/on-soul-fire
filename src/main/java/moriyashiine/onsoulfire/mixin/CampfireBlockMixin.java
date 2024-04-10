@@ -13,10 +13,10 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(CampfireBlock.class)
 public class CampfireBlockMixin {
-	@SuppressWarnings("ConstantConditions")
+	@SuppressWarnings("ConstantValue")
 	@ModifyArg(method = "onEntityCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
 	private float onsoulfire$soulFireBlockDamageMultiplier(float value) {
-		if (CampfireBlock.class.cast(this) == Blocks.SOUL_CAMPFIRE) {
+		if ((Object) this == Blocks.SOUL_CAMPFIRE) {
 			return value * ModConfig.soulFireBlockDamageMultiplier;
 		}
 		return value;

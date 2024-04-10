@@ -8,7 +8,7 @@
 	"MoriyaShiine"
   ],
   "contact": {
-	"homepage": "https://www.curseforge.com/minecraft/mc-mods/on-soul-fire",
+	"homepage": "https://modrinth.com/mod/on-soul-fire",
 	"sources": "https://github.com/MoriyaShiine/on-soul-fire",
 	"issues": "https://github.com/MoriyaShiine/on-soul-fire/issues"
   },
@@ -20,7 +20,7 @@
 	  "moriyashiine.onsoulfire.common.OnSoulFire"
 	],
 	"cardinal-components-entity": [
-	  "moriyashiine.onsoulfire.common.registry.ModEntityComponents"
+	  "moriyashiine.onsoulfire.common.init.ModEntityComponents"
 	]
   },
   "mixins": [
@@ -30,7 +30,7 @@
 	"fabricloader": "*",
 	"minecraft": "~1.20.1",
 	"java": ">=17",
-	"fabric-api": ">=0.83.1"
+	"fabric-api": "*"
   },
   "custom": {
 	"cardinal-components": [
