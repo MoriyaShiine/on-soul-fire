@@ -4,10 +4,10 @@
 
 package moriyashiine.onsoulfire.common.init;
 
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
-import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
-import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
+import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.ComponentRegistry;
+import org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry;
+import org.ladysnake.cca.api.v3.entity.EntityComponentInitializer;
 import moriyashiine.onsoulfire.common.OnSoulFire;
 import moriyashiine.onsoulfire.common.component.entity.OnSoulFireComponent;
 import net.minecraft.entity.Entity;
