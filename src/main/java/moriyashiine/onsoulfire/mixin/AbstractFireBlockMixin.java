@@ -26,6 +26,7 @@ public class AbstractFireBlockMixin {
 		boolean onSoulFire = state.getBlock() instanceof SoulFireBlock;
 		if (onSoulFireComponent.isOnSoulFire() != onSoulFire) {
 			onSoulFireComponent.setOnSoulFire(onSoulFire);
+			onSoulFireComponent.sync();
 		}
 	}
 
