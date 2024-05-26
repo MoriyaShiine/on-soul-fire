@@ -1,7 +1,6 @@
 /*
- * All Rights Reserved (c) MoriyaShiine
+ * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-
 package moriyashiine.onsoulfire.mixin;
 
 import moriyashiine.onsoulfire.common.component.entity.OnSoulFireComponent;
