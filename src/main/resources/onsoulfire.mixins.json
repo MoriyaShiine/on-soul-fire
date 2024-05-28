@@ -5,6 +5,7 @@
   "mixins": [
 	"AbstractFireBlockMixin",
 	"CampfireBlockMixin",
+	"EntityMixin",
 	"LivingEntityMixin",
 	"ProjectileFireMixin",
 	"ZombieEntityMixin"
