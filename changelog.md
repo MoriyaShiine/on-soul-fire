@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Version 1.21-r1
+------------------------------------------------------
+- update to 1.21
+- merge https://github.com/MoriyaShiine/on-soul-fire/pull/15
+- merge https://github.com/MoriyaShiine/on-soul-fire/pull/17
+
+------------------------------------------------------
 Version 1.20.6-r3
 ------------------------------------------------------
 - fix https://github.com/MoriyaShiine/on-soul-fire/issues/13
