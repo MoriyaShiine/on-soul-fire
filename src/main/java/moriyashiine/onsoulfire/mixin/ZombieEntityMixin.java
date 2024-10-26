@@ -7,6 +7,7 @@ import moriyashiine.onsoulfire.common.component.entity.OnSoulFireComponent;
 import moriyashiine.onsoulfire.common.init.ModEntityComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.ZombieEntity;
+import net.minecraft.server.world.ServerWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ZombieEntity.class)
 public class ZombieEntityMixin {
 	@Inject(method = "tryAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setOnFireFor(F)V"))
-	private void onsoulfire$setTargetOnSoulFire(Entity target, CallbackInfoReturnable<Boolean> callbackInfo) {
+	private void onsoulfire$setTargetOnSoulFire(ServerWorld world, Entity target, CallbackInfoReturnable<Boolean> cir) {
 		OnSoulFireComponent onSoulFireComponent = ModEntityComponents.ON_SOUL_FIRE.get(target);
 		boolean onSoulFire = ModEntityComponents.ON_SOUL_FIRE.get(this).isOnSoulFire();
 		if (onSoulFireComponent.isOnSoulFire() != onSoulFire) {

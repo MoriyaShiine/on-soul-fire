@@ -31,7 +31,7 @@ public class AbstractFireBlockMixin {
 	}
 
 	@SuppressWarnings("ConstantConditions")
-	@ModifyArg(method = "onEntityCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
+	@ModifyArg(method = "onEntityCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;serverDamage(Lnet/minecraft/entity/damage/DamageSource;F)V"))
 	private float onsoulfire$soulFireBlockDamageMultiplier(float value) {
 		if ((AbstractFireBlock) (Object) this instanceof SoulFireBlock) {
 			return value * ModConfig.soulFireBlockDamageMultiplier;

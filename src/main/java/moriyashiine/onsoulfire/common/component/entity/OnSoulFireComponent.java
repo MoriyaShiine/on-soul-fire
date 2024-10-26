@@ -43,7 +43,7 @@ public class OnSoulFireComponent implements AutoSyncedComponent, ServerTickingCo
 	}
 
 	public void sync() {
-		obj.syncComponent(ModEntityComponents.ON_SOUL_FIRE);
+		ModEntityComponents.ON_SOUL_FIRE.sync(obj);
 	}
 
 	public boolean isOnSoulFire() {
